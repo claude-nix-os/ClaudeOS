@@ -1,0 +1,29 @@
+#!/bin/bash
+set -e
+
+echo "=== ClaudeOS v3 Starting ==="
+
+# Load persisted env vars
+if [ -f /data/.env ]; then
+  echo "[entrypoint] Loading /data/.env"
+  set -a
+  source /data/.env
+  set +a
+fi
+
+# Ensure data directories exist
+mkdir -p /data/sessions /data/workspace
+
+# Generate auth token if not set
+if [ -z "$CLAUDE_OS_AUTH_TOKEN" ]; then
+  export CLAUDE_OS_AUTH_TOKEN=$(openssl rand -hex 24)
+  echo "CLAUDE_OS_AUTH_TOKEN=$CLAUDE_OS_AUTH_TOKEN" >> /data/.env
+fi
+
+echo "[entrypoint] Auth token: $CLAUDE_OS_AUTH_TOKEN"
+
+# MODULE_INIT_PLACEHOLDER
+
+# Start supervisor
+echo "[entrypoint] Starting supervisord..."
+exec /usr/bin/supervisord -c /etc/supervisord.conf

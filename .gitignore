@@ -1,0 +1,25 @@
+node_modules/
+.next/
+dist/
+*.tsbuildinfo
+.env
+.env.local
+
+# Generated files (build.ts output)
+src/generated/*.ts
+supervisord.conf
+Dockerfile
+entrypoint.sh
+build-manifest.json
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# IDE
+.vscode/
+.idea/
+
+# Nix
+result
+result-*

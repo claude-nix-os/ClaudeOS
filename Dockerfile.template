@@ -1,0 +1,38 @@
+# ClaudeOS v3 - Docker Build Template
+# Processed by kernel/build.ts to include module services
+
+FROM node:22-slim AS base
+
+RUN apt-get update && apt-get install -y \
+  supervisor curl git python3 python3-pip \
+  openssh-client openssl ripgrep jq \
+  && rm -rf /var/lib/apt/lists/*
+
+# Install Claude Code CLI
+RUN npm install -g @anthropic-ai/claude-code
+
+WORKDIR /app
+
+# Install dependencies
+COPY package.json package-lock.json* ./
+RUN npm ci --production=false
+
+# Copy source
+COPY . .
+
+# Build
+RUN npm run build
+
+# MODULE_INSTALL_PLACEHOLDER
+
+# Copy generated configs
+COPY supervisord.conf /etc/supervisord.conf
+COPY entrypoint.sh /app/entrypoint.sh
+RUN chmod +x /app/entrypoint.sh
+
+# Create data directory
+RUN mkdir -p /data/sessions /data/workspace
+
+EXPOSE 3000
+
+ENTRYPOINT ["/app/entrypoint.sh"]

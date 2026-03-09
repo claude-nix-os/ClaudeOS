@@ -1,0 +1,42 @@
+{
+  "name": "@claude-nix-os/claudeos",
+  "version": "3.0.0",
+  "private": true,
+  "scripts": {
+    "dev": "tsx kernel/server.ts",
+    "build": "tsx kernel/build.ts && next build",
+    "start": "NODE_ENV=production tsx kernel/server.ts",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "typecheck": "tsc --noEmit",
+    "module:add": "tsx kernel/cli/add-module.ts",
+    "module:remove": "tsx kernel/cli/remove-module.ts",
+    "module:list": "tsx kernel/cli/list-modules.ts"
+  },
+  "dependencies": {
+    "next": "^15.3.2",
+    "react": "^19.1.0",
+    "react-dom": "^19.1.0",
+    "zustand": "^5.0.5",
+    "ws": "^8.18.0",
+    "jose": "^6.0.11",
+    "nanoid": "^5.1.5",
+    "clsx": "^2.1.1",
+    "tailwind-merge": "^3.3.0",
+    "lucide-react": "^0.511.0",
+    "framer-motion": "^12.12.1"
+  },
+  "devDependencies": {
+    "typescript": "^5.8.3",
+    "tsx": "^4.19.4",
+    "vitest": "^3.2.1",
+    "@testing-library/react": "^16.3.0",
+    "@testing-library/jest-dom": "^6.6.3",
+    "@types/node": "^22.15.21",
+    "@types/react": "^19.1.4",
+    "@types/ws": "^8.18.1",
+    "tailwindcss": "^3.4.17",
+    "autoprefixer": "^10.4.21",
+    "postcss": "^8.5.3"
+  }
+}
